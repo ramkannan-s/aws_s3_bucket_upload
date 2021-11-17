@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: zenjob-pythonapp
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets: 
+            - name: tcxregsecret
+          containers:
+          - name: zenjob-pythonapp
+            image: tcxcontainers.azurecr.io/tcx/pythonapp:1.0.1
+            imagePullPolicy: Always
+            args:
+            - -e qa
+          restartPolicy: Never
