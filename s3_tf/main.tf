@@ -9,10 +9,23 @@ provider "aws" {
  * S3 Buckets
  *-------------------------------------------------*/
 
-resource "aws_s3_bucket" "create_buckets" {
-  count         = length(var.s3_bucket_names)
-  bucket        = var.s3_bucket_names[count.index]
-  acl           = "private"
-#  region        = "us-west-2"
-  force_destroy = true
+resource "aws_s3_bucket" "buckets_cleanup" {
+    count         = length(var.s3_bucket_names)
+    bucket        = var.s3_bucket_names[count.index]
+    #bucket  = "${var.bucket_id}"
+    #region        = "us-west-2"
+    acl     = "private"
+    force_destroy = true
+    lifecycle_rule {
+        id      = "clean-up-1-day"
+        enabled = true
+
+        expiration {
+            days = 1
+        }
+
+        noncurrent_version_expiration {
+            days = 1
+        }
+    }
 }
