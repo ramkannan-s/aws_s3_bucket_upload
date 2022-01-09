@@ -1,6 +1,6 @@
-# Zenjob Python App to upload file to S3 [WIP]
+# Python App to upload file to S3 
 
-Zenjob Assignment
+
 
 ## Python Script
 
